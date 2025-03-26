@@ -4,7 +4,11 @@ import android.util.Log;
 import android.widget.ProgressBar;
 
 public class Hero {
-    private float hp= 100f;
+    private static final float DELTA_PROPERTY_POINT = 0.1f;
+    private static final float DELTA_HP_POINT = 1.5f;
+    private static final float MAX_HP = 100f;
+    private float hp= MAX_HP;
+    private ProgressBar hp_bar;
     private Property[] propertys= new Property[]{
             new Property("hungry"),
             new Property("happy"),
@@ -50,7 +54,8 @@ public class Hero {
         }
     }
 
-    public Hero(ProgressBar[] progressBars) {
+    public Hero(ProgressBar hpBar,ProgressBar[] progressBars) {
+        hp_bar = hpBar;
         for (int i = 0 ; i<progressBars.length; i++){
             if (progressBars[i] != null){
                 propertys[i].setProgressBar(progressBars[i]);
@@ -68,16 +73,22 @@ public class Hero {
 
     public void update(){
         for (Property property : propertys) {
-            this.hp -= (1.5f- (property.getValue()/30));
-            if(this.hp >100){
-                this.hp = 100f;
+            this.hp -= (DELTA_HP_POINT - (property.getValue()/30));
+            if(this.hp >MAX_HP){
+                this.hp = MAX_HP;
             }
-            property.setValue(property.getValue()-0.1f);
+            if (property.getValue() > 0){
+                property.setValue(property.getValue()-DELTA_PROPERTY_POINT);
+            }
         }
     }
 
     public float getHp() {
         return hp;
+    }
+
+    public ProgressBar getHp_bar(){
+        return hp_bar;
     }
 
     public Property[] getPropertys() {
