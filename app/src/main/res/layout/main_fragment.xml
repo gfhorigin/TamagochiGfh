@@ -9,12 +9,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
-
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/minigames_btn"
         android:layout_width="wrap_content"
@@ -59,6 +53,7 @@
         android:progress="60"
         android:progressBackgroundTint="@color/BG"
         android:progressTint="@color/orange"
+        android:layout_margin="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="MissingConstraints" />
 
