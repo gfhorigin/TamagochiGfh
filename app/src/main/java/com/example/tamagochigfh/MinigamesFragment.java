@@ -20,17 +20,18 @@ public class MinigamesFragment extends Fragment {
         minigames_binding = MinigamesFragmentBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         hungryGameBtn();
-        return getView();
+        closeBtn();
+        return minigames_binding.getRoot();
     }
     public void closeBtn(){
         minigames_binding.closeButton.setOnClickListener(v -> {
-            Log.d("CLICK", "CLICK");
+            viewModel.mainFragmentVisibility.setValue(View.VISIBLE);
+            viewModel.minigameFragmentVisibility.setValue(View.GONE);
         });
     }
     public void hungryGameBtn(){
 
         minigames_binding.hungryGameButton.setOnClickListener(v -> {
-            Log.d("CLOSE","CLIOCK");
         });
     }
     public void setVisibility(int visibility){
@@ -38,5 +39,6 @@ public class MinigamesFragment extends Fragment {
             getView().setVisibility(visibility);
         }
     }
+
 
 }

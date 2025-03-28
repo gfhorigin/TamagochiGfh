@@ -21,13 +21,25 @@ public class MainFragment  extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainFragmentBinding = MainFragmentBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
+        minigamesOpenBtn();
         return mainFragmentBinding.getRoot();
     }
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel.setHero(generateHero());
+        viewModel.heroThread();
 
+        viewModel.mainFragmentVisibility.setValue(View.VISIBLE);
+        //viewModel.minigameFragmentVisibility.setValue(View.VISIBLE);
+
+    }
+
+    public void minigamesOpenBtn(){
+        mainFragmentBinding.minigamesBtn.setOnClickListener(v -> {
+            viewModel.mainFragmentVisibility.setValue(View.GONE);
+            viewModel.minigameFragmentVisibility.setValue(View.VISIBLE);
+        });
     }
 
     public Hero generateHero(){

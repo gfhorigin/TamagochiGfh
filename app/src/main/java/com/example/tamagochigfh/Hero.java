@@ -65,7 +65,7 @@ public class Hero {
     }
 
     public boolean isAlive(){
-        if(hp>0) {
+        if (hp>0) {
             return true;
         }
         return false;

@@ -1,6 +1,8 @@
 package com.example.tamagochigfh;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -11,11 +13,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tamagochigfh.databinding.ActivityMainBinding;
 import com.example.tamagochigfh.databinding.MinigamesFragmentBinding;
 
+import java.util.Objects;
 import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private MainActivityViewModel mainActivityViewModel;
     private MainFragment mainFragment;
     private MinigamesFragment minigamesFragment;
-
+    private Handler uiHandler = new Handler(Looper.getMainLooper());
     private ActivityMainBinding binding;
 
     @Override
@@ -38,8 +42,50 @@ public class MainActivity extends AppCompatActivity {
 
         setupFragments();
 
-        binding.mainFragmentContainer.setVisibility(View.VISIBLE);
+        //binding.mainFragmentContainer.setVisibility(View.VISIBLE);
 
+
+        visibleThread();
+        mainActivityViewModel.hero.observe(this, hero -> {
+                setProgressBar();
+        });
+
+    }
+
+    private void setProgressBar(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (mainActivityViewModel.hero.getValue().isAlive()){
+                    uiHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Objects.requireNonNull(mainActivityViewModel.getHero()).getHp_bar()
+                                    .setProgress((int) mainActivityViewModel.getHero().getHp());
+                            for (Hero.Property property : mainActivityViewModel.getHero().getPropertys()) {
+                                property.getProgressBar().setProgress((int) property.getValue());
+                            }
+                        }
+                    });
+                }
+
+
+            }
+        }).start();
+    }
+    private void visibleThread(){
+
+        uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mainActivityViewModel.getMainVisibility().observe(MainActivity.this, v->{
+                    binding.mainFragmentContainer.setVisibility(v);
+                });
+                mainActivityViewModel.minigameFragmentVisibility.observe(MainActivity.this, v->{
+                    binding.minigameFragmentContainer.setVisibility(v);
+                });
+            }
+        });
     }
 
     private void setupFragments() {
