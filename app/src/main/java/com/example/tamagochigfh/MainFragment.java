@@ -31,8 +31,6 @@ public class MainFragment  extends Fragment {
         viewModel.heroThread();
 
         viewModel.mainFragmentVisibility.setValue(View.VISIBLE);
-        //viewModel.minigameFragmentVisibility.setValue(View.VISIBLE);
-
     }
 
     public void minigamesOpenBtn(){
