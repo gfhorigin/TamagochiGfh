@@ -33,6 +33,7 @@ public class MainFragment  extends Fragment {
         viewModel.mainFragmentVisibility.setValue(View.VISIBLE);
     }
 
+    
     public void minigamesOpenBtn(){
         mainFragmentBinding.minigamesBtn.setOnClickListener(v -> {
             viewModel.mainFragmentVisibility.setValue(View.GONE);

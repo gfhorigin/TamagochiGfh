@@ -1,5 +1,7 @@
 package com.example.tamagochigfh;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -42,12 +44,13 @@ public class MainActivity extends AppCompatActivity {
 
         setupFragments();
 
-        //binding.mainFragmentContainer.setVisibility(View.VISIBLE);
-
-
         visibleThread();
         mainActivityViewModel.hero.observe(this, hero -> {
                 setProgressBar();
+        });
+
+        mainActivityViewModel.getChangeActivity().observe(this, value->{
+            changeActivity(value);
         });
 
     }
@@ -96,37 +99,10 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    public void changeActivity(Class nextActivity){
+        Intent intent = new Intent(MainActivity.this, nextActivity);
+        // Запускаем новую активность
+        startActivity(intent);
+    }
 
-//        getSupportFragmentManager().beginTransaction()
-//                .add(R.id.minigame_fragment_container, minigamesFragment) // Добавьте фрагмент в контейнер
-//                .addToBackStack(null) // Добавьте транзакцию в стек (опционально)
-//                .commit();
-//        binding.minigameFragmentContainer.setVisibility(View.VISIBLE);
-    //            binding.minigameFragmentContainer.setVisibility(View.GONE);
-    // binding = ActivityMainBinding.inflate(getLayoutInflater()); ActivityMainBinding.inflate(getLayoutInflater()
-//    void CharacteristicThread(){
-//        Thread thread = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                while (hero.isAlive()) {
-//                    //  Log.d("Thread", "YES");
-//                    hero.update();
-//
-//                    try {
-//                        Thread.sleep(200);
-//                    } catch (InterruptedException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                    runOnUiThread(() -> {
-//                        hero.getHp_bar().setProgress((int) hero.getHp());
-//                        for (Hero.Property property : hero.getPropertys()) {
-//                            property.getProgressBar().setProgress((int) property.getValue());
-//                        }
-//                    });
-//                }
-//            }
-//        });
-//
-//        thread.start();
-//    }
 }

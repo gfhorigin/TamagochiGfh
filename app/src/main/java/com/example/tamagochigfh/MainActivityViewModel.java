@@ -18,12 +18,18 @@ public class MainActivityViewModel extends ViewModel {
     public MutableLiveData<Hero> hero  = new MutableLiveData<>();
     public MutableLiveData<Integer> mainFragmentVisibility = new MutableLiveData<>() ;
     public MutableLiveData<Integer> minigameFragmentVisibility = new MutableLiveData<>();
+    public MutableLiveData<Class> nextActivity = new MutableLiveData<Class>();
 
     public LiveData<Integer> getMainVisibility(){
         return mainFragmentVisibility;
     }
     public LiveData<Integer> getMinigameVisibility(){
         return minigameFragmentVisibility;
+    }
+
+    public LiveData<Class> getChangeActivity(){
+
+        return  nextActivity;
     }
     public void setHero(Hero hero){
         this.hero.setValue(hero);

@@ -32,6 +32,7 @@ public class MinigamesFragment extends Fragment {
     public void hungryGameBtn(){
 
         minigames_binding.hungryGameButton.setOnClickListener(v -> {
+            viewModel.nextActivity.setValue(HungryGameActivity.class);
         });
     }
     public void setVisibility(int visibility){
