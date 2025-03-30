@@ -1,10 +1,10 @@
-package com.example.tamagochigfh;
+package com.example.tamagochigfh.food;
 
 import java.util.Random;
 
 public class HungryLevel {
     private int points;
-    private int time;
+    private float time;
 
     public HungryLevel() {
         this.points =  new Random().nextInt(11)+30;
@@ -15,7 +15,7 @@ public class HungryLevel {
         return points;
     }
 
-    public int getTime() {
+    public float getTime() {
         return time;
     }
 }

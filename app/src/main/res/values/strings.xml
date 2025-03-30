@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TamagochiGfh</string>
+    <string name="timer_string">Время: %s</string>
+    <string name="score_string">Ваш счет: %s/%s</string>
 </resources>

@@ -1,16 +1,8 @@
-package com.example.tamagochigfh;
+package com.example.tamagochigfh.mainActivity;
 
-import android.util.Log;
-import android.view.View;
-import android.widget.ProgressBar;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.example.tamagochigfh.databinding.ActivityMainBinding;
-import com.example.tamagochigfh.databinding.MainFragmentBinding;
-import com.example.tamagochigfh.databinding.MinigamesFragmentBinding;
 
 import java.util.Objects;
 

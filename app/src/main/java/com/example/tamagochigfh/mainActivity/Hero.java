@@ -1,6 +1,5 @@
-package com.example.tamagochigfh;
+package com.example.tamagochigfh.mainActivity;
 
-import android.util.Log;
 import android.widget.ProgressBar;
 
 public class Hero {
