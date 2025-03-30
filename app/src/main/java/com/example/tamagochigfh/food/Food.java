@@ -1,20 +1,41 @@
 package com.example.tamagochigfh.food;
 
+import android.content.Context;
+import android.media.Image;
+import android.util.Log;
+import android.widget.ImageView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.example.tamagochigfh.R;
 
 import java.util.Random;
 
 public class Food {
     private float x;
-    private float y;
+    private float y = 0;
     private float liveTime;
-    private float fallSpeed;
+    private int image;
+    private final float fallSpeed;
+    private static final int NACHOS_IMAGE= 0;
+    private static final int TOMATO_IMAGE= 1;
 
-    public Food(int containerWidth, int containerHeight, int objectWidth, int objectHeight ) {
-        x = new Random().nextInt(containerWidth-objectWidth);
-        y = new Random().nextInt(containerHeight-objectHeight);
+
+    public Food( int _image) {
+
+        if (_image == NACHOS_IMAGE){
+            this.image = R.drawable.nachos;
+        }
+        else if(_image == TOMATO_IMAGE){
+            this.image = R.drawable.tomato;
+        }
         liveTime = new Random().nextInt(5)+3;
-        fallSpeed = new Random().nextInt(10);
+        fallSpeed = new Random().nextInt(9)+2;
+    }
+
+
+    public int getImage() {
+        return image;
     }
 
     public float getFallSpeed() {
