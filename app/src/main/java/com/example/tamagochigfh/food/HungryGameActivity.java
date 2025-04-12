@@ -1,9 +1,13 @@
 package com.example.tamagochigfh.food;
 
+import static java.lang.Thread.sleep;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
@@ -12,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tamagochigfh.R;
 import com.example.tamagochigfh.databinding.HungryGameActivityBinding;
+import com.example.tamagochigfh.mainActivity.MainActivity;
 import com.example.tamagochigfh.mainActivity.MainActivityViewModel;
 
 import java.util.ArrayList;
@@ -34,7 +39,25 @@ public class HungryGameActivity extends AppCompatActivity {
         viewModel.timerThread();
         viewModel.spawnThread();
         setContentView(binding.getRoot());
+        viewModel.isActivity_life().observe(this, life->{
+                if (!life){
+                    binding.finalScore.bringToFront();
+                    binding.backBtn.bringToFront();
+                    binding.backBtn.setVisibility(ViewGroup.VISIBLE);
+                    binding.backBtn.setOnClickListener(v->{
+                        Intent intent = new Intent(HungryGameActivity.this, MainActivity.class);
+                        // Запускаем новую активность
+                        startActivity(intent);
+                    });
+                    binding.finalScore.setVisibility(ViewGroup.VISIBLE);
+                    binding.finalScore.setText(getString( R.string.your_score,
+                            Float.valueOf(viewModel.getHungry_points()).toString()));
 
+                }
+
+
+
+        });
         viewModel.getTime().observe(this,time->{
             binding.timerText.setText(getString( R.string.timer_string,
                     Objects.requireNonNull(viewModel.getTime().getValue()).toString()));
@@ -43,25 +66,9 @@ public class HungryGameActivity extends AppCompatActivity {
                 newFood(last);
         });
 
-//        ImageView imageView = new ImageView(this);
-//
-//        // Установить изображение из ресурсов
-//        imageView.setImageResource(R.drawable.tomato);
-//
-//        binding.container.addView(imageView);
-//
-
-//
-//
-//        imageView.setOnClickListener(v->{
-//            imageView.setX(imageView.getX()+100);
-//        });
+        animationThread();
     }
-    private void timerThread(){
-        binding.timerText.setText(getString( R.string.timer_string,
-                Objects.requireNonNull(viewModel.getTime().getValue()).toString()));
 
-    }
     private void newFood(Food food){
 
             ImageView  newImage = new ImageView(this);
@@ -71,14 +78,46 @@ public class HungryGameActivity extends AppCompatActivity {
                     @Override
                     public void onGlobalLayout() {
                         newImage.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                        Log.d("TEST",newImage.getWidth()+"");
                         newImage.setX(viewModel.getNewPosition(binding.container.getWidth(),
                                 newImage.getWidth()));
+
+                        newImage.setOnClickListener(v -> {
+
+                            if (food.isTasty()){
+                                viewModel.addHungry_points();
+                            }
+                            else{
+                                viewModel.subtractHungry_points();
+                            }
+                            ((ViewGroup) v.getParent()).removeView(v); // Удалить ImageView
+                        });
                         food.setX(newImage.getX());
                     }
             });
 
-
             images.add(newImage);
+    }
+    private void animationThread(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (Boolean.TRUE.equals(viewModel.isActivity_life().getValue())){
+                    try {
+                        for(ImageView image: images){
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    image.setY(image.getY()+viewModel.getSpeed());
+                                }
+                            });
+                        }
+                        sleep(60);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+            }
+        }).start();
     }
 }

@@ -2,4 +2,6 @@
     <string name="app_name">TamagochiGfh</string>
     <string name="timer_string">Время: %s</string>
     <string name="score_string">Ваш счет: %s/%s</string>
+    <string name="your_score">ваши очки: %s</string>
+    <string name="back">назад</string>
 </resources>

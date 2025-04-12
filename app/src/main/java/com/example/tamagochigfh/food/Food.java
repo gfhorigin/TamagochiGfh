@@ -14,23 +14,22 @@ import java.util.Random;
 public class Food {
     private float x;
     private float y = 0;
-    private float liveTime;
     private int image;
-    private final float fallSpeed;
     private static final int NACHOS_IMAGE= 0;
     private static final int TOMATO_IMAGE= 1;
+    private boolean isTasty;
 
 
     public Food( int _image) {
 
         if (_image == NACHOS_IMAGE){
             this.image = R.drawable.nachos;
+            this.isTasty = true;
         }
         else if(_image == TOMATO_IMAGE){
             this.image = R.drawable.tomato;
+            this.isTasty = false;
         }
-        liveTime = new Random().nextInt(5)+3;
-        fallSpeed = new Random().nextInt(9)+2;
     }
 
 
@@ -38,9 +37,7 @@ public class Food {
         return image;
     }
 
-    public float getFallSpeed() {
-        return fallSpeed;
-    }
+
 
     public float getX() {
         return x;
@@ -54,15 +51,8 @@ public class Food {
         return y;
     }
 
-    public void setY(float y) {
-        this.y = y;
-    }
 
-    public float getLiveTime() {
-        return liveTime;
-    }
-
-    public void setLiveTime(float liveTime) {
-        this.liveTime = liveTime;
+    public boolean isTasty() {
+        return isTasty;
     }
 }

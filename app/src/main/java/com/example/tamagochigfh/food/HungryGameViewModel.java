@@ -16,8 +16,9 @@ import java.util.Random;
 public class HungryGameViewModel extends ViewModel {
 
     private static final float SPAWN_TIME = 1f;
+    private MutableLiveData<Boolean> activity_life =  new MutableLiveData<Boolean>(true);
     private MutableLiveData<Float> time = new MutableLiveData<Float>();
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private int hungry_points = 0;
     public LiveData<Float> getTime() {
         return time;
     }
@@ -48,6 +49,8 @@ public class HungryGameViewModel extends ViewModel {
                     }
                 }
                 time.postValue(0f);
+
+
             }
         }).start();
     }
@@ -58,7 +61,7 @@ public class HungryGameViewModel extends ViewModel {
                 while (time.getValue()>0){
                     try {
                         sleep((long) (1000*SPAWN_TIME));
-                        time.postValue((float) (Math.round( (time.getValue()-0.1f )*10)/10f));
+
 
                         lastFood.postValue(new Food(new Random().nextInt(10)%2));
                         foods.add(lastFood.getValue());
@@ -67,6 +70,8 @@ public class HungryGameViewModel extends ViewModel {
                         throw new RuntimeException(e);
                     }
                 }
+                activity_life.postValue(false);
+
 
             }
         }).start();
@@ -75,4 +80,23 @@ public class HungryGameViewModel extends ViewModel {
         return new Random().nextInt(containerWidth-objectWidth);
     }
 
+    public LiveData<Boolean> isActivity_life() {
+        return activity_life;
+    }
+
+    public void subtractHungry_points () {
+         hungry_points -= level.getPoints();
+    }
+
+    public void addHungry_points () {
+        hungry_points += level.getPoints();
+    }
+
+    public float getHungry_points() {
+        return hungry_points ;
+    }
+
+    public float getSpeed(){
+        return  level.getFall_speed();
+    }
 }
