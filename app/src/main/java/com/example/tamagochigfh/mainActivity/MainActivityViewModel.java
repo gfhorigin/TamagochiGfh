@@ -36,7 +36,6 @@ public class MainActivityViewModel extends ViewModel {
                 while (Objects.requireNonNull(hero.getValue()).isAlive()) {
                     //Log.d("Thread", "YES");
                     hero.getValue().update();
-
                     try {
                         Thread.sleep(200);
                     } catch (InterruptedException e) {

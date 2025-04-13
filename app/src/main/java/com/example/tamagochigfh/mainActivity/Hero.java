@@ -3,6 +3,7 @@ package com.example.tamagochigfh.mainActivity;
 import android.widget.ProgressBar;
 
 public class Hero {
+    private static Hero instance;
     private static final float DELTA_PROPERTY_POINT = 0.1f;
     private static final float DELTA_HP_POINT = 1.5f;
     private static final float MAX_HP = 100f;
@@ -62,7 +63,23 @@ public class Hero {
 
         }
     }
+    private void reBar(ProgressBar hpBar,ProgressBar[] progressBars) {
+        hp_bar = hpBar;
+        for (int i = 0 ; i<progressBars.length; i++){
+            if (progressBars[i] != null){
+                propertys[i].setProgressBar(progressBars[i]);
+            }
 
+        }
+
+    }
+    public static synchronized Hero initialize(ProgressBar hpBar,ProgressBar[] progressBars){
+        if(instance == null){
+            instance = new Hero(hpBar, progressBars);
+        }
+        instance.reBar(hpBar, progressBars);
+        return instance;
+    }
     public boolean isAlive(){
         if (hp>0) {
             return true;

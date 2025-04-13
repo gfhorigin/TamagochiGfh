@@ -51,7 +51,7 @@ public class HungryGameActivity extends AppCompatActivity {
                     });
                     binding.finalScore.setVisibility(ViewGroup.VISIBLE);
                     binding.finalScore.setText(getString( R.string.your_score,
-                            Float.valueOf(viewModel.getHungry_points()).toString()));
+                            Integer.valueOf(viewModel.getHungry_points()).toString()));
 
                 }
 

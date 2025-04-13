@@ -92,7 +92,7 @@ public class HungryGameViewModel extends ViewModel {
         hungry_points += level.getPoints();
     }
 
-    public float getHungry_points() {
+    public int getHungry_points() {
         return hungry_points ;
     }
 

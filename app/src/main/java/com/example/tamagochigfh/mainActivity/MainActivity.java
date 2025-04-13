@@ -1,5 +1,7 @@
 package com.example.tamagochigfh.mainActivity;
 
+import static java.lang.Thread.sleep;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         setupFragments();
 
-        visibleThread();
+        visibleObserve();
         mainActivityViewModel.hero.observe(this, hero -> {
                 setProgressBar();
         });
@@ -59,24 +61,21 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     });
+                    try {
+                        sleep(100);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-
-
             }
         }).start();
     }
-    private void visibleThread(){
-
-        uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mainActivityViewModel.getMainVisibility().observe(MainActivity.this, v->{
-                    binding.mainFragmentContainer.setVisibility(v);
-                });
-                mainActivityViewModel.minigameFragmentVisibility.observe(MainActivity.this, v->{
-                    binding.minigameFragmentContainer.setVisibility(v);
-                });
-            }
+    private void visibleObserve(){
+        mainActivityViewModel.getMainVisibility().observe(MainActivity.this, v->{
+            binding.mainFragmentContainer.setVisibility(v);
+        });
+        mainActivityViewModel.minigameFragmentVisibility.observe(MainActivity.this, v->{
+            binding.minigameFragmentContainer.setVisibility(v);
         });
     }
 
@@ -87,10 +86,8 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.main_fragment_container,mainFragment)
                 .commit();
     }
-
     public void changeActivity(Class nextActivity){
         Intent intent = new Intent(MainActivity.this, nextActivity);
-        // Запускаем новую активность
         startActivity(intent);
     }
 

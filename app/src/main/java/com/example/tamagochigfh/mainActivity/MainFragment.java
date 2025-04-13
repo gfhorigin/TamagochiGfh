@@ -1,6 +1,7 @@
 package com.example.tamagochigfh.mainActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +42,8 @@ public class MainFragment  extends Fragment {
     }
 
     public Hero generateHero(){
-
-        return new Hero(mainFragmentBinding.hpBar,
+        Log.d("NEW HERO GENERATED", "ACCES");
+        return Hero.initialize(mainFragmentBinding.hpBar,
                 new ProgressBar[]{
                         mainFragmentBinding.hungryBar,
                         mainFragmentBinding.happyBar,
