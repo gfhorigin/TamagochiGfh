@@ -54,9 +54,6 @@ public class HungryGameActivity extends AppCompatActivity {
                             Integer.valueOf(viewModel.getHungry_points()).toString()));
 
                 }
-
-
-
         });
         viewModel.getTime().observe(this,time->{
             binding.timerText.setText(getString( R.string.timer_string,
@@ -65,8 +62,10 @@ public class HungryGameActivity extends AppCompatActivity {
         viewModel.getLastFood().observe(this, last->{
                 newFood(last);
         });
+        viewModel.getAnimation_tick().observe(this, tick->{
+            animationTick();
+        });
 
-        animationThread();
     }
 
     private void newFood(Food food){
@@ -82,14 +81,16 @@ public class HungryGameActivity extends AppCompatActivity {
                                 newImage.getWidth()));
 
                         newImage.setOnClickListener(v -> {
+                            if(Boolean.TRUE.equals(viewModel.isActivity_life().getValue())){
+                                if (food.isTasty()){
+                                    viewModel.addHungry_points();
+                                }
+                                else{
+                                    viewModel.subtractHungry_points();
+                                }
+                                ((ViewGroup) v.getParent()).removeView(v); // Удалить ImageView
+                            }
 
-                            if (food.isTasty()){
-                                viewModel.addHungry_points();
-                            }
-                            else{
-                                viewModel.subtractHungry_points();
-                            }
-                            ((ViewGroup) v.getParent()).removeView(v); // Удалить ImageView
                         });
                         food.setX(newImage.getX());
                     }
@@ -97,27 +98,16 @@ public class HungryGameActivity extends AppCompatActivity {
 
             images.add(newImage);
     }
-    private void animationThread(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (Boolean.TRUE.equals(viewModel.isActivity_life().getValue())){
-                    try {
-                        for(ImageView image: images){
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    image.setY(image.getY()+viewModel.getSpeed());
-                                }
-                            });
-                        }
-                        sleep(60);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
+    private void animationTick(){
 
-            }
-        }).start();
+        for(ImageView image: images){
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    image.setY(image.getY()+viewModel.getSpeed());
+                }
+            });
+        }
+
     }
 }

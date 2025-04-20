@@ -36,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
         setupFragments();
 
         visibleObserve();
-        mainActivityViewModel.hero.observe(this, hero -> {
-                setProgressBar();
+
+        mainActivityViewModel.getIsUpdate().observe(this, update->{
+            setProgressBar();
         });
 
         mainActivityViewModel.getChangeActivity().observe(this, value->{
@@ -47,29 +48,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setProgressBar(){
-        new Thread(new Runnable() {
+
+        uiHandler.post(new Runnable() {
             @Override
             public void run() {
-                while (mainActivityViewModel.hero.getValue().isAlive()){
-                    uiHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Objects.requireNonNull(mainActivityViewModel.getHero()).getHp_bar()
-                                    .setProgress((int) mainActivityViewModel.getHero().getHp());
-                            for (Hero.Property property : mainActivityViewModel.getHero().getPropertys()) {
-                                property.getProgressBar().setProgress((int) property.getValue());
-                            }
-                        }
-                    });
-                    try {
-                        sleep(100);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                Objects.requireNonNull(mainActivityViewModel.getHero()).getHp_bar()
+                        .setProgress((int) mainActivityViewModel.getHero().getHp());
+                for (Hero.Property property : mainActivityViewModel.getHero().getPropertys()) {
+                    property.getProgressBar().setProgress((int) property.getValue());
                 }
             }
-        }).start();
+        });
+
     }
+
     private void visibleObserve(){
         mainActivityViewModel.getMainVisibility().observe(MainActivity.this, v->{
             binding.mainFragmentContainer.setVisibility(v);
