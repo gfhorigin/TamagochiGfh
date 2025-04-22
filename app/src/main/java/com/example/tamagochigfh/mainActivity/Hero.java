@@ -10,6 +10,9 @@ import androidx.room.PrimaryKey;
 import com.example.tamagochigfh.DB.HeroDB;
 import com.example.tamagochigfh.DB.HeroDao;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 //import org.junit.Ignore;
 
 @Entity(tableName = "heroes")
@@ -239,13 +242,22 @@ public class Hero {
         if (savedHero != null) {
             // Обновляем UI-компоненты
             savedHero.reBar(hpBar, progressBars);
-
-            // Синхронизируем значения свойств
             savedHero.syncPropertiesFromColumns();
             return savedHero;
         } else {
-            // Создаем нового героя, если записей нет
-            return Hero.initialize(hpBar, progressBars);
+            // Создаем и сохраняем нового героя
+            Hero newHero = Hero.initialize(hpBar, progressBars);
+
+            // Синхронизируем данные перед сохранением
+            newHero.syncPropertiesToColumns();
+
+            // Сохраняем в БД в фоновом потоке
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            executor.execute(() -> {
+                heroDao.insert(newHero);
+            });
+
+            return newHero;
         }
     }
     // Синглтон-инстанс

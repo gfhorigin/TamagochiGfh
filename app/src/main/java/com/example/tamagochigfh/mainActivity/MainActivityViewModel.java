@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.tamagochigfh.DB.HeroDB;
+import com.example.tamagochigfh.DB.HeroDao;
 
 import java.util.Objects;
 
@@ -48,6 +49,7 @@ public class MainActivityViewModel extends ViewModel {
                     isUpdate.postValue(true);
                     try {
                         Thread.sleep(200);
+
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }

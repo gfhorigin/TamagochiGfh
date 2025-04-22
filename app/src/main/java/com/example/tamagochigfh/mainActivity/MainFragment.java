@@ -132,7 +132,40 @@ public class MainFragment  extends Fragment {
     }
     public Hero generateHero(){
         Log.d("NEW HERO GENERATED", "ACCES");
-        return Hero.loadFromDatabase(requireActivity().getApplication(),mainFragmentBinding.hpBar,
+        Log.d("NEW HERO GENERATED", "ACCESS");
+        final Hero[] hero = new Hero[1];
+        final Object lock = new Object();
+
+        new Thread(() -> {
+            synchronized(lock) {
+                hero[0] = Hero.loadFromDatabase(
+                        requireActivity().getApplication(),
+                        mainFragmentBinding.hpBar,
+                        new ProgressBar[]{
+                                mainFragmentBinding.hungryBar,
+                                mainFragmentBinding.happyBar,
+                                mainFragmentBinding.intelligenceDevelopmentBar,
+                                mainFragmentBinding.hairinessBar,
+                                mainFragmentBinding.tirednessBar,
+                                mainFragmentBinding.moneyBar,
+                                mainFragmentBinding.stressBar,
+                                mainFragmentBinding.immunityBar,
+                                mainFragmentBinding.nerdinessBar
+                        }
+                );
+                lock.notifyAll();
+            }
+        }).start();
+
+        synchronized(lock) {
+            try {
+                lock.wait(3000); // Ожидаем максимум 3 секунды
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
+        return hero[0] != null ? hero[0] : Hero.initialize(mainFragmentBinding.hpBar,
                 new ProgressBar[]{
                         mainFragmentBinding.hungryBar,
                         mainFragmentBinding.happyBar,
@@ -142,8 +175,7 @@ public class MainFragment  extends Fragment {
                         mainFragmentBinding.moneyBar,
                         mainFragmentBinding.stressBar,
                         mainFragmentBinding.immunityBar,
-                        mainFragmentBinding.nerdinessBar
-                });
+                        mainFragmentBinding.nerdinessBar});
     }
 
 }
