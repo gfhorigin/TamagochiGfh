@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tamagochigfh.R;
+
 import com.example.tamagochigfh.databinding.HungryGameActivityBinding;
 import com.example.tamagochigfh.mainActivity.MainActivity;
 import com.example.tamagochigfh.mainActivity.MainActivityViewModel;
@@ -29,6 +30,9 @@ public class HungryGameActivity extends AppCompatActivity {
     private HungryGameViewModel viewModel;
     private ArrayList<ImageView> images = new ArrayList<>();
     private Handler handler =  new Handler(Looper.getMainLooper());
+    private static final String ID_KEY = "ID";
+    private static final String VALUE_KEY = "VALUE";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,9 @@ public class HungryGameActivity extends AppCompatActivity {
                     binding.backBtn.setOnClickListener(v->{
                         Intent intent = new Intent(HungryGameActivity.this, MainActivity.class);
                         // Запускаем новую активность
+                        intent.putExtra(ID_KEY, 1);
+                        intent.putExtra(VALUE_KEY, viewModel.getHungry_points());
+                       // Hero.getInnstance();
                         startActivity(intent);
                     });
                     binding.finalScore.setVisibility(ViewGroup.VISIBLE);

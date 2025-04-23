@@ -75,7 +75,8 @@ public class Hero {
             new Property("immunity"),
             new Property("money")
     };
-
+    @Ignore
+    private static Hero instance;
     // Конструктор для Room
     public Hero() {
         syncPropertiesFromColumns();
@@ -261,5 +262,5 @@ public class Hero {
         }
     }
     // Синглтон-инстанс
-    private static Hero instance;
+
 }

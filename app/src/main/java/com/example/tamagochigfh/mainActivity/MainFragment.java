@@ -132,7 +132,6 @@ public class MainFragment  extends Fragment {
     }
     public Hero generateHero(){
         Log.d("NEW HERO GENERATED", "ACCES");
-        Log.d("NEW HERO GENERATED", "ACCESS");
         final Hero[] hero = new Hero[1];
         final Object lock = new Object();
 

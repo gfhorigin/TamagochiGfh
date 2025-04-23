@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tamagochigfh.DB.HeroDB;
@@ -26,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
     private MinigamesFragment minigamesFragment;
     private Handler uiHandler = new Handler(Looper.getMainLooper());
     private ActivityMainBinding binding;
+    private static final String ID_KEY = "ID";
+    private static final String VALUE_KEY = "VALUE";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +40,26 @@ public class MainActivity extends AppCompatActivity {
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         minigamesFragment = new MinigamesFragment();
         mainFragment = new MainFragment();
+        mainActivityViewModel.getObserveHero().observe(this, new Observer<Hero>() {
+            @Override
+            public void onChanged(Hero value) {
+                if (value != null) {
+                    // Удаляем наблюдатель
+                    mainActivityViewModel.getObserveHero().removeObserver(this);
+
+                    // Логика обработки
+                    Intent intent = getIntent();
+                    mainActivityViewModel.updateProperty(
+                            intent.getIntExtra(ID_KEY, 0),
+                            intent.getIntExtra(VALUE_KEY, 0)
+                    );
+                }
+            }
+        });
 
         setupFragments();
-
         visibleObserve();
+
 
         mainActivityViewModel.getIsUpdate().observe(this, update->{
             setProgressBar();
@@ -48,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         mainActivityViewModel.getChangeActivity().observe(this, value->{
             changeActivity(value);
         });
+
+
 
     }
 
@@ -70,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                     HeroDao heroDao = db.heroDao();
                     try {
                         heroDao.update(currentHero);
-                        Log.d("DB_UPDATE", "Hero updated successfully");
+
                     } catch (Exception e) {
                         Log.e("DB_UPDATE", "Error updating hero", e);
                     }
