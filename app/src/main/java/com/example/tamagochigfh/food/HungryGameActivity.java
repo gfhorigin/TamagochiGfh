@@ -32,6 +32,7 @@ public class HungryGameActivity extends AppCompatActivity {
     private Handler handler =  new Handler(Looper.getMainLooper());
     private static final String ID_KEY = "ID";
     private static final String VALUE_KEY = "VALUE";
+    private static final String TEXT_KEY = "TEXT";
 
 
     @Override
@@ -53,6 +54,7 @@ public class HungryGameActivity extends AppCompatActivity {
                         // Запускаем новую активность
                         intent.putExtra(ID_KEY, 1);
                         intent.putExtra(VALUE_KEY, viewModel.getHungry_points());
+                        intent.putExtra(TEXT_KEY, "ВКУСНО!");
                        // Hero.getInnstance();
                         startActivity(intent);
                     });

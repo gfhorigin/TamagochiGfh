@@ -1,6 +1,7 @@
 package com.example.tamagochigfh.mainActivity;
 
 import android.app.Application;
+import android.util.Log;
 import android.widget.ProgressBar;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -158,6 +159,7 @@ public class Hero {
             }
         }
         syncPropertiesToColumns(); // Автосохранение при обновлении
+        syncPropertiesFromColumns();
     }
 
     // Геттеры/сеттеры
@@ -239,13 +241,17 @@ public class Hero {
 
         // Загружаем данные из БД
         Hero savedHero = heroDao.getHero();
-
+        Log.d("NEW HERO GENERATED", "START");
         if (savedHero != null) {
             // Обновляем UI-компоненты
             savedHero.reBar(hpBar, progressBars);
+
             savedHero.syncPropertiesFromColumns();
+            Log.d("NEW HERO GENERATED", "OLD");
+
             return savedHero;
         } else {
+            Log.d("NEW HERO GENERATED", "ACCES");
             // Создаем и сохраняем нового героя
             Hero newHero = Hero.initialize(hpBar, progressBars);
 
@@ -258,7 +264,7 @@ public class Hero {
                 heroDao.insert(newHero);
             });
 
-            return newHero;
+            return loadFromDatabase(application, hpBar, progressBars);
         }
     }
     // Синглтон-инстанс

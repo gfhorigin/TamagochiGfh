@@ -26,7 +26,7 @@ public class MainActivityViewModel extends ViewModel {
     public LiveData<Integer> getMinigameVisibility(){
         return minigameFragmentVisibility;
     }
-    private boolean prop_update = false;
+
 
     public LiveData<Class> getChangeActivity(){
 
@@ -62,26 +62,19 @@ public class MainActivityViewModel extends ViewModel {
             case HUGRY_ID:
                 Log.d("propety set", id+" |"+ value);
                 newValue = currentHero.getHungry() + value;
-                currentHero.setHungry(newValue);
+                currentHero.setHungry(Math.min(newValue,100));
                 break;
         }
         currentHero.syncPropertiesFromColumns();
+
         hero.setValue(currentHero);
-        prop_update = true;
     }
 
     public void heroThread(){
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                if (!prop_update){
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                Log.d("TEEEEEEEEEEEEEEEEEEEES","----------------------------------------------");
+
                 while (Objects.requireNonNull(hero.getValue()).isAlive()) {
                     hero.getValue().update();
                     isUpdate.postValue(true);

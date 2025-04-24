@@ -53,6 +53,7 @@ public class MainFragment  extends Fragment {
         mainFragmentBinding.minigamesBtn.setOnClickListener(v -> {
             viewModel.mainFragmentVisibility.setValue(View.GONE);
             viewModel.minigameFragmentVisibility.setValue(View.VISIBLE);
+            setText(" ");
 
         });
     }
@@ -131,7 +132,7 @@ public class MainFragment  extends Fragment {
         });
     }
     public Hero generateHero(){
-        Log.d("NEW HERO GENERATED", "ACCES");
+
         final Hero[] hero = new Hero[1];
         final Object lock = new Object();
 
@@ -164,17 +165,10 @@ public class MainFragment  extends Fragment {
             }
         }
 
-        return hero[0] != null ? hero[0] : Hero.initialize(mainFragmentBinding.hpBar,
-                new ProgressBar[]{
-                        mainFragmentBinding.hungryBar,
-                        mainFragmentBinding.happyBar,
-                        mainFragmentBinding.intelligenceDevelopmentBar,
-                        mainFragmentBinding.hairinessBar,
-                        mainFragmentBinding.tirednessBar,
-                        mainFragmentBinding.moneyBar,
-                        mainFragmentBinding.stressBar,
-                        mainFragmentBinding.immunityBar,
-                        mainFragmentBinding.nerdinessBar});
+        return hero[0] ;
     }
 
+    public void setText(String stringExtra) {
+        mainFragmentBinding.textView.setText(stringExtra);
+    }
 }

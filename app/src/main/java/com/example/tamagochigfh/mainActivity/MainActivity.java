@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private static final String ID_KEY = "ID";
     private static final String VALUE_KEY = "VALUE";
+    private static final String TEXT_KEY = "TEXT";
 
 
     @Override
@@ -53,12 +54,14 @@ public class MainActivity extends AppCompatActivity {
                             intent.getIntExtra(ID_KEY, 0),
                             intent.getIntExtra(VALUE_KEY, 0)
                     );
+                    mainFragment.setText(intent.getStringExtra(TEXT_KEY));
                 }
             }
         });
 
         setupFragments();
         visibleObserve();
+
 
 
         mainActivityViewModel.getIsUpdate().observe(this, update->{
