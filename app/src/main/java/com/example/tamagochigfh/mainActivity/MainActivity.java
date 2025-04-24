@@ -58,7 +58,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        mainActivityViewModel.getLive().observe(this, live->{
+            if (!live){
+                mainFragment.setText("Умер");
+                mainFragment.restartVisible();
+            }
+        });
         setupFragments();
         visibleObserve();
 

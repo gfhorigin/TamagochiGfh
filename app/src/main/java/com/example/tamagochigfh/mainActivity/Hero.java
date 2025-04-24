@@ -267,6 +267,7 @@ public class Hero {
             return loadFromDatabase(application, hpBar, progressBars);
         }
     }
+
     // Синглтон-инстанс
 
 }

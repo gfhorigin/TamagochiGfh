@@ -19,7 +19,12 @@ public class MainActivityViewModel extends ViewModel {
     public MutableLiveData<Integer> mainFragmentVisibility = new MutableLiveData<>() ;
     public MutableLiveData<Integer> minigameFragmentVisibility = new MutableLiveData<>();
     public MutableLiveData<Class> nextActivity = new MutableLiveData<Class>();
+    public MutableLiveData<Boolean> live = new MutableLiveData<>(true);
 
+
+    public LiveData<Boolean> getLive(){
+        return live;
+    }
     public LiveData<Integer> getMainVisibility(){
         return mainFragmentVisibility;
     }
@@ -85,9 +90,11 @@ public class MainActivityViewModel extends ViewModel {
                         throw new RuntimeException(e);
                     }
                 }
+                live.postValue(hero.getValue().isAlive());
             }
         });
         thread.start();
     }
+
 
 }

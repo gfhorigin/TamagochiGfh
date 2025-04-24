@@ -7,6 +7,8 @@ import androidx.room.RoomDatabase;
 
 import com.example.tamagochigfh.mainActivity.Hero;
 
+import java.util.concurrent.Executors;
+
 @Database(entities = {Hero.class}, version = 1)
 public abstract class HeroDB extends RoomDatabase {
     private static HeroDB instance = null;
@@ -28,6 +30,15 @@ public abstract class HeroDB extends RoomDatabase {
             instance = null;
         }
     }
-
+    public static void clearDatabase(Application application) {
+        if (instance != null && instance.isOpen()) {
+            Executors.newSingleThreadExecutor().execute(() -> {
+                HeroDao dao = instance.heroDao();
+                dao.deleteAllHeroes();
+                instance.close();
+                instance = null;
+            });
+        }
+    }
     public abstract HeroDao heroDao();
 }

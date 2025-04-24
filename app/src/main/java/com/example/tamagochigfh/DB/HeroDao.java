@@ -17,4 +17,7 @@ public interface HeroDao {
 
     @Query("SELECT * FROM heroes LIMIT 1")
     Hero getHero();
+
+    @Query("DELETE FROM heroes")
+    void deleteAllHeroes();
 }

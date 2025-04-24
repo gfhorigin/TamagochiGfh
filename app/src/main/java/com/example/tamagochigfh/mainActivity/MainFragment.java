@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.tamagochigfh.DB.HeroDB;
 import com.example.tamagochigfh.R;
 import com.example.tamagochigfh.databinding.MainFragmentBinding;
 import com.google.android.material.snackbar.Snackbar;
@@ -36,7 +37,7 @@ public class MainFragment  extends Fragment {
         stressBarClick();
         immunityBarClick();
         moneyBarClick();
-
+        restartBtn();
         return mainFragmentBinding.getRoot();
     }
     @Override
@@ -51,13 +52,31 @@ public class MainFragment  extends Fragment {
     
     public void minigamesOpenBtn(){
         mainFragmentBinding.minigamesBtn.setOnClickListener(v -> {
-            viewModel.mainFragmentVisibility.setValue(View.GONE);
-            viewModel.minigameFragmentVisibility.setValue(View.VISIBLE);
-            setText(" ");
-
+            if(viewModel.getHero().isAlive()){
+                viewModel.mainFragmentVisibility.setValue(View.GONE);
+                viewModel.minigameFragmentVisibility.setValue(View.VISIBLE);
+                setText(" ");
+            }
         });
     }
+    public void restartVisible(){
+        mainFragmentBinding.restartBtn.setVisibility(View.VISIBLE);
+    }
+    public void restartBtn(){
+        mainFragmentBinding.restartBtn.setOnClickListener(v->{
+            Log.d("restartClick", "CLICKKKKKK");
+            // Очищаем БД
+            HeroDB.clearDatabase(requireActivity().getApplication());
 
+            // Пересоздаем героя
+            viewModel.setHero(generateHero());
+            viewModel.heroThread();
+
+            // Обновляем UI
+            mainFragmentBinding.textView.setText("");
+            mainFragmentBinding.restartBtn.setVisibility(View.GONE);
+        });
+    }
     public void hungryBarClick(){
         mainFragmentBinding.hungryBar.setOnClickListener(v->{
             Snackbar.make(mainFragmentBinding.getRoot(), R.string.hungry_desc, Snackbar.LENGTH_LONG)

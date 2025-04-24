@@ -13,4 +13,5 @@
     <string name="stress_desc">характеристика стресса\n</string>
     <string name="money_desc">характеристика денег\n</string>
     <string name="immunity_desc">характеристика иммунитета</string>
+    <string name="restart_btn">restart</string>
 </resources>
