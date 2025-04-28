@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tamagochigfh.R;
+
 import com.example.tamagochigfh.databinding.HungryGameActivityBinding;
 import com.example.tamagochigfh.mainActivity.MainActivity;
 import com.example.tamagochigfh.mainActivity.MainActivityViewModel;
@@ -29,6 +30,10 @@ public class HungryGameActivity extends AppCompatActivity {
     private HungryGameViewModel viewModel;
     private ArrayList<ImageView> images = new ArrayList<>();
     private Handler handler =  new Handler(Looper.getMainLooper());
+    private static final String ID_KEY = "ID";
+    private static final String VALUE_KEY = "VALUE";
+    private static final String TEXT_KEY = "TEXT";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,10 @@ public class HungryGameActivity extends AppCompatActivity {
                     binding.backBtn.setOnClickListener(v->{
                         Intent intent = new Intent(HungryGameActivity.this, MainActivity.class);
                         // Запускаем новую активность
+                        intent.putExtra(ID_KEY, 1);
+                        intent.putExtra(VALUE_KEY, viewModel.getHungry_points());
+                        intent.putExtra(TEXT_KEY, "ВКУСНО!");
+                       // Hero.getInnstance();
                         startActivity(intent);
                     });
                     binding.finalScore.setVisibility(ViewGroup.VISIBLE);
@@ -54,9 +63,6 @@ public class HungryGameActivity extends AppCompatActivity {
                             Integer.valueOf(viewModel.getHungry_points()).toString()));
 
                 }
-
-
-
         });
         viewModel.getTime().observe(this,time->{
             binding.timerText.setText(getString( R.string.timer_string,
@@ -65,8 +71,10 @@ public class HungryGameActivity extends AppCompatActivity {
         viewModel.getLastFood().observe(this, last->{
                 newFood(last);
         });
+        viewModel.getAnimation_tick().observe(this, tick->{
+            animationTick();
+        });
 
-        animationThread();
     }
 
     private void newFood(Food food){
@@ -82,14 +90,16 @@ public class HungryGameActivity extends AppCompatActivity {
                                 newImage.getWidth()));
 
                         newImage.setOnClickListener(v -> {
+                            if(Boolean.TRUE.equals(viewModel.isActivity_life().getValue())){
+                                if (food.isTasty()){
+                                    viewModel.addHungry_points();
+                                }
+                                else{
+                                    viewModel.subtractHungry_points();
+                                }
+                                ((ViewGroup) v.getParent()).removeView(v); // Удалить ImageView
+                            }
 
-                            if (food.isTasty()){
-                                viewModel.addHungry_points();
-                            }
-                            else{
-                                viewModel.subtractHungry_points();
-                            }
-                            ((ViewGroup) v.getParent()).removeView(v); // Удалить ImageView
                         });
                         food.setX(newImage.getX());
                     }
@@ -97,27 +107,16 @@ public class HungryGameActivity extends AppCompatActivity {
 
             images.add(newImage);
     }
-    private void animationThread(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (Boolean.TRUE.equals(viewModel.isActivity_life().getValue())){
-                    try {
-                        for(ImageView image: images){
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    image.setY(image.getY()+viewModel.getSpeed());
-                                }
-                            });
-                        }
-                        sleep(60);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
+    private void animationTick(){
 
-            }
-        }).start();
+        for(ImageView image: images){
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    image.setY(image.getY()+viewModel.getSpeed());
+                }
+            });
+        }
+
     }
 }

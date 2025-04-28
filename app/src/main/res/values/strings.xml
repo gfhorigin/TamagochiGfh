@@ -4,4 +4,14 @@
     <string name="score_string">Ваш счет: %s/%s</string>
     <string name="your_score">ваши очки: %s</string>
     <string name="back">назад</string>
+    <string name="hungry_desc">Характеристика голода</string>
+    <string name="happyy_desc">характеристика счастья</string>
+    <string name="development_desc">характеристика интелектуального развития</string>
+    <string name="nerdiness_desc">характеристика гиковства</string>
+    <string name="tiredness_desc">характеристика стресса\n</string>
+    <string name="hairiness_desc">характеристика обросшести</string>
+    <string name="stress_desc">характеристика стресса\n</string>
+    <string name="money_desc">характеристика денег\n</string>
+    <string name="immunity_desc">характеристика иммунитета</string>
+    <string name="restart_btn">restart</string>
 </resources>

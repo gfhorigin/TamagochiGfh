@@ -16,6 +16,7 @@ import java.util.Random;
 public class HungryGameViewModel extends ViewModel {
 
     private static final float SPAWN_TIME = 1f;
+    private MutableLiveData<Integer> animation_tick = new MutableLiveData<>(1);
     private MutableLiveData<Boolean> activity_life =  new MutableLiveData<Boolean>(true);
     private MutableLiveData<Float> time = new MutableLiveData<Float>();
     private int hungry_points = 0;
@@ -25,6 +26,11 @@ public class HungryGameViewModel extends ViewModel {
     private ArrayList<Food> foods = new ArrayList<>();
     private HungryLevel level;
     private MutableLiveData<Food> lastFood = new MutableLiveData<Food>();
+
+    public LiveData<Integer> getAnimation_tick() {
+        return animation_tick;
+    }
+
     public LiveData<Food> getLastFood(){
         return lastFood;
     }
@@ -40,10 +46,12 @@ public class HungryGameViewModel extends ViewModel {
                 while (time.getValue()>0){
                     try {
 
-                        sleep(100);
+                        sleep(50);
                         time.postValue((float) (Math.round( (time.getValue()-0.1f )*10)/10f));
 
-
+                        animation_tick.postValue(animation_tick.getValue()*-1);
+                        sleep(50);
+                        animation_tick.postValue(animation_tick.getValue()*-1);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -65,6 +73,7 @@ public class HungryGameViewModel extends ViewModel {
 
                         lastFood.postValue(new Food(new Random().nextInt(10)%2));
                         foods.add(lastFood.getValue());
+
 
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
