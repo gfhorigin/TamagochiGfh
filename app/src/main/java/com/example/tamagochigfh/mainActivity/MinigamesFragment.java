@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tamagochigfh.databinding.MinigamesFragmentBinding;
 import com.example.tamagochigfh.food.HungryGameActivity;
+import com.example.tamagochigfh.imunity.ImunityActivityGame;
 
 public class MinigamesFragment extends Fragment {
     private MinigamesFragmentBinding minigames_binding;
@@ -20,6 +21,7 @@ public class MinigamesFragment extends Fragment {
         minigames_binding = MinigamesFragmentBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         hungryGameBtn();
+        imunityGameBtn();
         closeBtn();
         return minigames_binding.getRoot();
     }
@@ -33,6 +35,11 @@ public class MinigamesFragment extends Fragment {
 
         minigames_binding.hungryGameButton.setOnClickListener(v -> {
             viewModel.nextActivity.setValue(HungryGameActivity.class);
+        });
+    }
+    public void imunityGameBtn(){
+        minigames_binding.imunityGameButton.setOnClickListener(v->{
+            viewModel.nextActivity.setValue(ImunityActivityGame.class);
         });
     }
     public void setVisibility(int visibility){
