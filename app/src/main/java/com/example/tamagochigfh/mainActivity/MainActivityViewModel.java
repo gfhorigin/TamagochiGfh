@@ -15,6 +15,11 @@ public class MainActivityViewModel extends ViewModel {
 
     private final static int HUGRY_ID =1 ;
     private static final int IMUNITY_ID =2 ;
+    private static final int HAPPY_ID = 3 ;
+    private static final int TIREDNESS_ID = 4;
+    private static final int DEVELOP_ID = 5 ;
+    private static final int STRESS_ID = 6;
+    private static final int MONEY_ID = 7;
     public MutableLiveData<Hero> hero  = new MutableLiveData<>();
     public MutableLiveData<Boolean> isUpdate = new MutableLiveData<Boolean>(false);
     public MutableLiveData<Integer> mainFragmentVisibility = new MutableLiveData<>() ;
@@ -74,6 +79,31 @@ public class MainActivityViewModel extends ViewModel {
                 Log.d("propety set", id+" |"+ value);
                 newValue = currentHero.getImmunity() + value;
                 currentHero.setImmunity(Math.min(newValue,100));
+                break;
+            case HAPPY_ID:
+                Log.d("propety set", id+" |"+ value);
+                newValue = currentHero.getHappy() + value;
+                currentHero.setHappy(Math.min(newValue,100));
+                break;
+            case TIREDNESS_ID:
+                Log.d("propety set", id+" |"+ value);
+                newValue = currentHero.getTiredness() + value;
+                currentHero.setTiredness(Math.min(newValue,100));
+                break;
+            case DEVELOP_ID:
+                Log.d("propety set", id+" |"+ value);
+                newValue = currentHero.getIntelligence() + value;
+                currentHero.setIntelligence(Math.min(newValue,100));
+                break;
+            case STRESS_ID:
+                Log.d("propety set", id+" |"+ value);
+                newValue = currentHero.getStress() + value;
+                currentHero.setStress(Math.min(newValue,100));
+                break;
+            case MONEY_ID:
+                Log.d("propety set", id+" |"+ value);
+                newValue = currentHero.getMoney() + value;
+                currentHero.setMoney(Math.min(newValue,100));
                 break;
         }
         currentHero.syncPropertiesFromColumns();

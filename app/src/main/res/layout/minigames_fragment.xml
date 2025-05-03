@@ -79,8 +79,47 @@
 
         app:layout_constraintTop_toBottomOf="@id/hungry_game_button"
         />
+    <ImageButton
+
+        app:srcCompat="@drawable/tiredness_minigame"
+        android:id="@+id/tiredness_game_button"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_margin="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toEndOf="@id/develop_game_button"
+        app:layout_constraintEnd_toStartOf="@id/stress_game_button"
+
+        app:layout_constraintTop_toBottomOf="@id/imunity_game_button"
+        />
+    <ImageButton
+
+        app:srcCompat="@drawable/stress_minigame"
+        android:id="@+id/stress_game_button"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_margin="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toEndOf="@id/tiredness_game_button"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/happy_game_button"
+        />
+    <ImageButton
+
+        app:srcCompat="@drawable/money_minigame"
+        android:id="@+id/money_game_button"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_margin="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/tiredness_game_button"
+        />
     <Button
-        app:layout_constraintTop_toBottomOf="@id/develop_game_button"
+        app:layout_constraintTop_toBottomOf="@id/money_game_button"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

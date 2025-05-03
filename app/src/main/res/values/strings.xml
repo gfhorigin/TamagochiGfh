@@ -8,7 +8,7 @@
     <string name="happyy_desc">характеристика счастья</string>
     <string name="development_desc">характеристика интелектуального развития</string>
     <string name="nerdiness_desc">характеристика гиковства</string>
-    <string name="tiredness_desc">характеристика стресса\n</string>
+    <string name="tiredness_desc">характеристика усталости\n</string>
     <string name="hairiness_desc">характеристика обросшести</string>
     <string name="stress_desc">характеристика стресса\n</string>
     <string name="money_desc">характеристика денег\n</string>
