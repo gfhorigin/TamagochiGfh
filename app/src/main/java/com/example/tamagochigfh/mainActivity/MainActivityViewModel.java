@@ -14,6 +14,7 @@ import java.util.Objects;
 public class MainActivityViewModel extends ViewModel {
 
     private final static int HUGRY_ID =1 ;
+    private static final int IMUNITY_ID =2 ;
     public MutableLiveData<Hero> hero  = new MutableLiveData<>();
     public MutableLiveData<Boolean> isUpdate = new MutableLiveData<Boolean>(false);
     public MutableLiveData<Integer> mainFragmentVisibility = new MutableLiveData<>() ;
@@ -68,6 +69,11 @@ public class MainActivityViewModel extends ViewModel {
                 Log.d("propety set", id+" |"+ value);
                 newValue = currentHero.getHungry() + value;
                 currentHero.setHungry(Math.min(newValue,100));
+                break;
+            case IMUNITY_ID:
+                Log.d("propety set", id+" |"+ value);
+                newValue = currentHero.getImmunity() + value;
+                currentHero.setImmunity(Math.min(newValue,100));
                 break;
         }
         currentHero.syncPropertiesFromColumns();
