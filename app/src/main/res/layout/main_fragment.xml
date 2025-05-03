@@ -91,17 +91,6 @@
         android:layout_margin="2dp"
         tools:ignore="MissingConstraints" />
 
-    <ProgressBar
-        android:id="@+id/nerdiness_bar"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:progress="60"
-        android:progressBackgroundTint="@color/BG"
-        android:progressTint="@color/dark_blue"
-        app:layout_constraintBottom_toTopOf="@+id/intelligence_development_bar"
-        android:layout_margin="2dp"
-        tools:ignore="MissingConstraints" />
 
     <ProgressBar
         android:id="@+id/tiredness_bar"
@@ -111,7 +100,7 @@
         android:progress="60"
         android:progressBackgroundTint="@color/BG"
         android:progressTint="@color/green"
-        app:layout_constraintBottom_toTopOf="@+id/nerdiness_bar"
+        app:layout_constraintBottom_toTopOf="@+id/intelligence_development_bar"
         android:layout_margin="2dp"
         tools:ignore="MissingConstraints" />
 
