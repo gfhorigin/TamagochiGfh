@@ -31,9 +31,8 @@ public class MainFragment  extends Fragment {
         hungryBarClick();
         happyBarClick();
         developmentBarClick();
-        nerdinessBarClick();
         tirednessBarClick();
-        hairinessBarClick();
+     //   hairinessBarClick();
         stressBarClick();
         immunityBarClick();
         moneyBarClick();
@@ -102,14 +101,7 @@ public class MainFragment  extends Fragment {
         });
     }
 
-    public void nerdinessBarClick(){
-        mainFragmentBinding.nerdinessBar.setOnClickListener(v->{
-            Snackbar.make(mainFragmentBinding.getRoot(), R.string.nerdiness_desc, Snackbar.LENGTH_LONG)
-                    .setTextColor(Color.BLACK)
-                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.dark_blue))
-                    .show();
-        });
-    }
+
     public void tirednessBarClick(){
         mainFragmentBinding.tirednessBar.setOnClickListener(v->{
             Snackbar.make(mainFragmentBinding.getRoot(), R.string.tiredness_desc, Snackbar.LENGTH_LONG)
@@ -118,14 +110,14 @@ public class MainFragment  extends Fragment {
                     .show();
         });
     }
-    public void hairinessBarClick(){
-        mainFragmentBinding.hairinessBar.setOnClickListener(v->{
-            Snackbar.make(mainFragmentBinding.getRoot(), R.string.hairiness_desc, Snackbar.LENGTH_LONG)
-                    .setTextColor(Color.BLACK)
-                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.brown))
-                    .show();
-        });
-    }
+//    public void hairinessBarClick(){
+//        mainFragmentBinding.hairinessBar.setOnClickListener(v->{
+//            Snackbar.make(mainFragmentBinding.getRoot(), R.string.hairiness_desc, Snackbar.LENGTH_LONG)
+//                    .setTextColor(Color.BLACK)
+//                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.brown))
+//                    .show();
+//        });
+//    }
     public void stressBarClick(){
         mainFragmentBinding.stressBar.setOnClickListener(v->{
             Snackbar.make(mainFragmentBinding.getRoot(), R.string.stress_desc, Snackbar.LENGTH_LONG)
@@ -164,12 +156,14 @@ public class MainFragment  extends Fragment {
                                 mainFragmentBinding.hungryBar,
                                 mainFragmentBinding.happyBar,
                                 mainFragmentBinding.intelligenceDevelopmentBar,
-                                mainFragmentBinding.hairinessBar,
+                            //    mainFragmentBinding.hairinessBar,
                                 mainFragmentBinding.tirednessBar,
-                                mainFragmentBinding.moneyBar,
+
                                 mainFragmentBinding.stressBar,
                                 mainFragmentBinding.immunityBar,
-                                mainFragmentBinding.nerdinessBar
+                                mainFragmentBinding.moneyBar,
+
+                           //     mainFragmentBinding.nerdinessBar
                         }
                 );
                 lock.notifyAll();

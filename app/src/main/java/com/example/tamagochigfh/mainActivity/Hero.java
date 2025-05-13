@@ -69,9 +69,9 @@ public class Hero {
             new Property("hungry"),
             new Property("happy"),
             new Property("intelligence_development"),
-            new Property("nerdiness"),
+  //          new Property("nerdiness"),
             new Property("tiredness"),
-            new Property("hairiness"),
+        //    new Property("hairiness"),
             new Property("stress"),
             new Property("immunity"),
             new Property("money")
@@ -103,24 +103,24 @@ public class Hero {
         hungry = propertys[0].getValue();
         happy = propertys[1].getValue();
         intelligence = propertys[2].getValue();
-        nerdiness = propertys[3].getValue();
-        tiredness = propertys[4].getValue();
-        hairiness = propertys[5].getValue();
-        stress = propertys[6].getValue();
-        immunity = propertys[7].getValue();
-        money = propertys[8].getValue();
+        //nerdiness = propertys[3].getValue();
+        tiredness = propertys[3].getValue();
+       // hairiness = propertys[4].getValue();
+        stress = propertys[4].getValue();
+        immunity = propertys[5].getValue();
+        money = propertys[6].getValue();
     }
 
     public void syncPropertiesFromColumns() {
         propertys[0].setValue(hungry);
         propertys[1].setValue(happy);
         propertys[2].setValue(intelligence);
-        propertys[3].setValue(nerdiness);
-        propertys[4].setValue(tiredness);
-        propertys[5].setValue(hairiness);
-        propertys[6].setValue(stress);
-        propertys[7].setValue(immunity);
-        propertys[8].setValue(money);
+        //propertys[3].setValue(nerdiness);
+        propertys[3].setValue(tiredness);
+      //  propertys[4].setValue(hairiness);
+        propertys[4].setValue(stress);
+        propertys[5].setValue(immunity);
+        propertys[6].setValue(money);
     }
 
     // Метод для повторной привязки ProgressBar
